@@ -14,9 +14,6 @@ window.onload = function(){
         if (!selectedOperation) {
             // Проверяем, не пытаемся ли мы добавить вторую точку
             if ((digit != '.') || (digit == '.' && !a.includes(digit))) { 
-                // здесь у нас происходит складывание сохраненного уже числа и нажатой цифры. Оба поля string, поэтому
-                // каждый раз цифра записывается в конец строки. Например: a = '14', digit = '5', 
-                // a += digit - это короткая запись a = a + digit - поэтомоу после этой операции a = '145'
                 a += digit;
             }
             outputElement.innerHTML = a;
@@ -29,33 +26,46 @@ window.onload = function(){
             }
         }
     }
-    // Настраиваем обработчики для цифровых кнопок - для каждой кнопки с цифрой и точкой вызываем выше написанную функцию по формированию числа
+    // Настраиваем обработчики для цифровых кнопок
     digitButtons.forEach(button => {
         button.onclick = function() {
-            // берем текст, написанный на кнопке - он и является цифрой
             const digitValue = button.innerHTML;
             onDigitButtonClicked(digitValue);
         }
     });
 
-    // Настраиваем обработчики для кнопок операций - сохраняем выбранную операцию в ранее созданную переменную selectedOperation
+    // Настраиваем обработчики для кнопок операций
     document.getElementById("btn_op_mult").onclick = function() { 
         if (a === '') return;
         selectedOperation = 'x';
     }
-    document.getElementById("btn_op_plus").onclick = function() { 
-        if (a === '') return;
-        selectedOperation = '+';
+    document.getElementById("btn_op_plus").onclick = function () {
+    if (a === '') return;
+
+    if (selectedOperation === '+' && b !== '') {
+        a = ((+a) + (+b)).toString();
+        b = '';
+        outputElement.innerHTML = a;
     }
-    document.getElementById("btn_op_minus").onclick = function() { 
-        if (a === '') return;
-        selectedOperation = '-';
+
+    selectedOperation = '+';
+    }
+    document.getElementById("btn_op_minus").onclick = function () {
+    if (a === '') return;
+
+    if (selectedOperation === '-' && b !== '') {
+        a = ((+a) - (+b)).toString();
+        b = '';
+        outputElement.innerHTML = a;
+    }
+
+    selectedOperation = '-';
     }
     document.getElementById("btn_op_div").onclick = function() { 
         if (a === '') return;
         selectedOperation = '/';
     }
-    // Очищаем все значения при нажатии на кнопку C (вешаем обработчик события click на кнопку С)
+    // Очищаем все значения при нажатии на кнопку C
     document.getElementById("btn_op_clear").onclick = function() { 
         a = ''
         b = ''
@@ -63,17 +73,105 @@ window.onload = function(){
         expressionResult = ''
         outputElement.innerHTML = 0
     }
-    // Вычисляем результат при нажатии на = (вешаем обработчик события click на кнопку =)
+    
+    document.getElementById('theme_toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('light');
+    });
+
+    if (!document.body.classList.contains('light') && !document.body.classList.contains('dark')) {
+    document.body.classList.add('light');
+    }
+
+    // document.getElementById("btn_op_sign").onclick = function() {
+    //     if (!selectedOperation) {
+    //         if (a === '') return;
+    //         a = (-1 * (+a)).toString();
+    //         outputElement.innerHTML = a;
+    //     } else {
+    //         if (b === '') return;
+    //         b = (-1 * (+b)).toString();
+    //         outputElement.innerHTML = b;
+    //     }
+    // }
+
+    document.getElementById("btn_op_percent").onclick = function() {
+        if (!selectedOperation) {
+            if (a === '') return;
+            a = ((+a) / 100).toString();
+            outputElement.innerHTML = a;
+        } else {
+            if (b === '') return;
+            b = ((+b) / 100).toString();
+            outputElement.innerHTML = b;
+        }
+    }
+
+
+    // document.getElementById("btn_op_percent").onclick = function () {
+    //     if (!selectedOperation) {
+    //         if (a === '') return;
+    //         a = a.slice(0, -1);
+    //         outputElement.innerHTML = a === '' ? 0 : a;
+    //     } else {
+    //         if (b === '') return;
+    //         b = b.slice(0, -1);
+    //         outputElement.innerHTML = b === '' ? 0 : b;
+    //     }
+    // }
+
+    // document.getElementById("btn_op_percent").onclick = function () {
+    //     if (!selectedOperation) {
+    //         if (a === '') return;
+    //         a = Math.sqrt(+a).toString();
+    //         outputElement.innerHTML = a;
+    //     } else {
+    //         if (b === '') return;
+    //         b = Math.sqrt(+b).toString();
+    //         outputElement.innerHTML = b;
+    //     }
+    // }
+
+    function factorial(n) {
+        let res = 1;
+        for (let i = 2; i <= n; i++) res *= i;
+        return res;
+    }
+
+    document.getElementById("btn_op_factorial").onclick = function () {
+        if (!selectedOperation) {
+            if (a === '') return;
+            const n = Math.trunc(+a);
+            a = factorial(n).toString();
+            outputElement.innerHTML = a;
+        } else {
+            if (b === '') return;
+            const n = Math.trunc(+b);
+            b = factorial(n).toString();
+            outputElement.innerHTML = b;
+        }
+    }
+
+    // document.getElementById("btn_op_percent").onclick = function () {
+    //     if (!selectedOperation) {
+    //         if (a === '') return;
+    //         a = ((+a) * (+a)).toString();
+    //         outputElement.innerHTML = a;
+    //     } else {
+    //         if (b === '') return;
+    //         b = ((+b) * (+b)).toString();
+    //         outputElement.innerHTML = b;
+    //     }
+    // }
+
+    // Вычисляем результат при нажатии на =
     document.getElementById("btn_op_equal").onclick = function() { 
-        // Проверяем, что у нас есть оба числа и операция
         if (a === '' || b === '' || !selectedOperation)
             return
             
-        // Выполняем выбранную операцию - чтобы не плодить if, воспользуемся удобной и более наглядной функцией сравнения switch, которая на основе значения переданной переменной выполняет нужный кейс. В case указывается ожидаемое точное значение переменной (это может быть любое значение), а затем после : пишется код, который нужно выполнить в данном случае. Case проверяются последовательно, выход из switch происходит при попадании на break или если значение не совпало ни с чем.
         switch(selectedOperation) { 
             case 'x':
                 expressionResult = (+a) * (+b)
-                // обязательно пишется в конце действий case, чтобы выйти из switch, иначе продолжится сравнение case дальше
                 break;
             case '+':
                 expressionResult = (+a) + (+b)
@@ -84,17 +182,14 @@ window.onload = function(){
             case '/':
                 expressionResult = (+a) / (+b)
                 break;
-            // желательно (но не обязательно) всегда прописывать дефолтное поведение, в случае если в переменной окажется не перечисленное выше значение. в нашем случае это не нужно.
             default:
                 break;
         }
         
-        // Сохраняем результат и очищаем второе число, чтобы при новом вводе записывать значение нового числа в b
         a = expressionResult.toString()
         b = ''
         selectedOperation = null
 
-        // Показываем результат на экране
         outputElement.innerHTML = a
     }
 };

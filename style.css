@@ -1,63 +1,272 @@
-
-/* опишем базовый стиль кнопки калькулятора */
-.my-btn { 
-  margin-right: 5px;           /* задаем отступ от кнопки справа */
-  margin-top: 5px;             /* задаем отступ от кнопки сверху*/
-  width: 50px;                 /* задаем ширину кнопки */
-  height: 50px;                /* задаем высоту кнопки */
-  border-radius: 50%;          /* округляем кнопку */
-  border: none;                /* отключаем обводку */
-  background: #515151;         /* задаем серый цвет кнопки */
-  color: white;                /* задаем белый цвет текста внутри кнопки */
-  font-size: 1.5rem;           /* увеличим размер шрифта */
-  font-family: Arial, Helvetica, sans-serif; /* сменим шрифт */
-  cursor: pointer;             /* при наведении на кнопку курсор будет изменен
-                                  со стрелки на 'указательный палец' */
-  user-select: none;           /* отключаем возможность выделить текст внутри кнопки */
-} 
-
-/* hover - это состояние элемента, когда на него наведен курсор */
-.my-btn:hover {
-  background: darkgray; /* при наведение курсора на кнопку, она будет окрашена в серый */
-}
-
-/* active - это состояние активации элемента. В случае кнопки - нажатие на нее */
-.my-btn:active {
-  filter: brightness(130%); /* увеличим интенсивность цвета для эффекта вспышки */
-}
-
-/* селектор для кнопок первостепенных операций */
-.my-btn.primary { 
-  background: #ff9801; /* цвет кнопки оранжевый */
-}
-
-/* селектор для кнопок второстепенных операций */
-.my-btn.secondary { 
-  background: #a6a6a6; /* цвет кнопки сервый */
-}
-
-/* селектор для кнопки расчета выражения (=) */
-.my-btn.execute { 
-  width: 110px;          /* сделаем кнопку шире других */
-  border-radius: 34px;   /* подкорректируем округлость */
-}
-
-/* селектор для поля вывода результата */
-.result { 
-  width: 220px;
-  height: 50px;
-  margin-bottom: 15px;         /* отступ снизу */
-  padding-right: 10px;         /* выступ справа */
-  background: rgb(73, 73, 73); /* цвет можно задавать и таким образом */
-  text-align: right;           /* примагнитим текст к правой стороне */
-  color: #ffffff;              /* цвет текста белый */
+.my-btn{
+  margin-right: 1px;
+  margin-top: 1px;
+  width: 62px;
+  height: 56px;
+  border-radius: 0;
+  border: 1px solid #e6e7ea;
+  background: #ffffff;
+  color: #111827;
   font-size: 1.5rem;
   font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  user-select: none;
 }
 
-.background {
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    /* background: #515151; */
+button[id^="btn_digit_"].my-btn{
+  background: #e9eaee;
+}
+
+#btn_digit_dot.my-btn{
+  background: #ffffff;
+}
+
+button[id^="btn_digit_"].my-btn:hover{
+  background: #dde0e6;
+}
+
+#btn_digit_dot.my-btn:hover{
+  background: #f3f4f6;
+}
+
+button[id^="btn_digit_"].my-btn:active{
+  background: #d6dae2;
+}
+
+#btn_digit_dot.my-btn:active{
+  background: #eceef1;
+}
+
+.my-btn:hover{
+  background: #f3f4f6;
+}
+
+.my-btn:active{
+  filter: none;
+  background: #eceef1;
+}
+
+.my-btn.primary{
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e6e7ea;
+}
+
+.my-btn.secondary{
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e6e7ea;
+}
+
+.my-btn.execute{
+  width: 130px;
+  border-radius: 0;
+}
+
+.result{
+  width: 268px;
+  height: 78px;
+  margin-bottom: 10px;
+  padding-right: 10px;
+  background: transparent;
+  text-align: right;
+  color: #111827;
+  font-size: 2.1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  border-bottom: 2px dotted #bfc4cc;
+}
+
+.background{
+  display: flex;
+  justify-content: center;
+  background-image: none;
+  background-color: #ffffff;
+  padding-top: 18px;
+}
+
+.footer{
+  margin-top: 10px;
+  text-align: center;
+  color: #6b7280;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.calculator{
+  padding: 18px 16px 14px;
+  border-radius: 28px;
+  background: #f6f7f8;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+}
+
+.theme-btn{
+  width: 268px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e6e7ea;
+}
+
+body.light.background{
+  background-image: none;
+  background-color: #ffffff;
+}
+
+body.light .result{
+  background: transparent;
+  color: #111827;
+  font-weight: 500;
+}
+
+body.light .my-btn{
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e6e7ea;
+}
+
+body.light button[id^="btn_digit_"].my-btn{
+  background: #e9eaee;
+}
+
+body.light #btn_digit_dot.my-btn{
+  background: #ffffff;
+}
+
+body.light .my-btn.primary{
+  background: #ffffff;
+  color: #111827;
+}
+
+body.light .footer{
+  color: #6b7280;
+}
+
+.github-btn{
+  display: block;
+  width: 248px;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  text-align: center;
+  padding: 12px;
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.mode{
+  width: 268px;
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e6e7ea;
+  background: #ffffff;
+  color: #111827;
+}
+
+.details{
+  margin-top: 10px;
+  color: #4b5563;
+  width: 268px;
+}
+
+.details summary{
+  cursor: pointer;
+  font-weight: 600;
+  color: #374151;
+}
+
+body.dark.background{
+  background-color: #0b0f19;
+}
+
+body.dark .calculator{
+  background: #111827;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+}
+
+body.dark .result{
+  color: #f9fafb;
+  border-bottom-color: #3b4252;
+}
+
+body.dark .my-btn{
+  background: #111827;
+  color: #f9fafb;
+  border-color: #3b4252;
+}
+
+body.dark button[id^="btn_digit_"].my-btn{
+  background: #2b3446;
+  color: #f9fafb;
+  border-color: #3b4252;
+}
+
+body.dark #btn_digit_dot.my-btn{
+  background: #111827;
+  color: #f9fafb;
+}
+
+body.dark .my-btn.primary,
+body.dark .my-btn.secondary{
+  background: #111827;
+  color: #f9fafb;
+  border-color: #3b4252;
+}
+
+body.dark .my-btn:hover{
+  background: #162033;
+}
+
+body.dark button[id^="btn_digit_"].my-btn:hover{
+  background: #323c52;
+}
+
+body.dark #btn_digit_dot.my-btn:hover{
+  background: #162033;
+}
+
+body.dark .my-btn:active{
+  background: #101a2c;
+}
+
+body.dark button[id^="btn_digit_"].my-btn:active{
+  background: #2a3346;
+}
+
+body.dark #btn_digit_dot.my-btn:active{
+  background: #101a2c;
+}
+
+body.dark .footer{
+  color: #cbd5e1;
+}
+
+body.dark .github-btn{
+  background: #0b1220;
+}
+
+body.dark .theme-btn{
+  background: #0b1220;
+  color: #f9fafb;
+  border-color: #3b4252;
+}
+
+body.dark .mode{
+  background: #0b1220;
+  color: #f9fafb;
+  border-color: #3b4252;
+}
+
+body.dark .details{
+  color: #cbd5e1;
+}
+
+body.dark .details summary{
+  color: #e5e7eb;
 }
