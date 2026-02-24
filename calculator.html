@@ -7,7 +7,14 @@
 </head>
 
 <body class="background">
-  <div"> <!-- div - это базовый html-контейнер, который может содержать в себе другие html-элементы. -->
+  <div>
+    <select class="mode">
+      <option>Обычный</option>
+      <option>Инженерный</option>
+      <option>Учебный</option>
+    </select>
+  </div>
+  <div class="calculator"> <!-- div - это базовый html-контейнер, который может содержать в себе другие html-элементы. -->
     
     <!-- блок с экраном калькулятора, где будет выводиться результат вычислений. -->
     <div id="result" class="result">
@@ -50,7 +57,31 @@
         <button id="btn_digit_dot" class="my-btn">.</button>
         <button id="btn_op_equal" class="my-btn primary execute">=</button>
       </div>
+
+      <div class="footer">
+        Выполнил Мусаев Максим
+      </div>
+
+      <div>
+        <a class="github-btn" href="https://github.com/Mr-Flyguy" target="_blank">GitHub</a>
+      </div>
+
+      <button id="theme_toggle" class="my-btn primary theme-btn">
+        Сменить тему
+      </button>
     </div>
   </div>
+  <div>
+    <details class="details">
+      <summary>Автор</summary>
+      <div>Мусаев Максим Шахинович</div>
+      <div>РТ5-41Б</div>
+    </details>
+  </div>
+  <script>
+    document.getElementById('theme_toggle').addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+  </script>
 </body>
 </html>

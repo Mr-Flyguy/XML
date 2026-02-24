@@ -5,7 +5,7 @@
   margin-top: 5px;             /* задаем отступ от кнопки сверху*/
   width: 50px;                 /* задаем ширину кнопки */
   height: 50px;                /* задаем высоту кнопки */
-  border-radius: 50%;          /* округляем кнопку */
+  border-radius: 0;          /* округляем кнопку */
   border: none;                /* отключаем обводку */
   background: #515151;         /* задаем серый цвет кнопки */
   color: white;                /* задаем белый цвет текста внутри кнопки */
@@ -18,7 +18,7 @@
 
 /* hover - это состояние элемента, когда на него наведен курсор */
 .my-btn:hover {
-  background: darkgray; /* при наведение курсора на кнопку, она будет окрашена в серый */
+  background: purple; /* при наведение курсора на кнопку, она будет окрашена в серый */
 }
 
 /* active - это состояние активации элемента. В случае кнопки - нажатие на нее */
@@ -28,7 +28,7 @@
 
 /* селектор для кнопок первостепенных операций */
 .my-btn.primary { 
-  background: #ff9801; /* цвет кнопки оранжевый */
+  background: purple; /* цвет кнопки оранжевый */
 }
 
 /* селектор для кнопок второстепенных операций */
@@ -45,19 +45,77 @@
 /* селектор для поля вывода результата */
 .result { 
   width: 220px;
-  height: 50px;
+  height: 70px;
   margin-bottom: 15px;         /* отступ снизу */
   padding-right: 10px;         /* выступ справа */
-  background: rgb(73, 73, 73); /* цвет можно задавать и таким образом */
+  background: #a6a6a6; /* цвет можно задавать и таким образом */
   text-align: right;           /* примагнитим текст к правой стороне */
-  color: #ffffff;              /* цвет текста белый */
-  font-size: 1.5rem;
+  color: #0b1220;              /* цвет текста белый */
+  font-size: 2rem;
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
 }
 
 .background {
-    background: transparent;
     display: flex;
     justify-content: center;
-    /* background: #515151; */
+    background-image: url('dark.png');
+}
+
+.footer{
+  margin-top: 12px;
+  text-align: center;
+  color: #cbd5e1;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.calculator{
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.theme-btn{
+  width: 220px;
+  border-radius: 12px;
+}
+
+body.light.background { background-image: url('white.png');}
+body.light .result { background: #ffffff; color: #111827; font-weight: 200;}
+body.light .my-btn { background: #d1d5db; color: #111827; border: 1.5px solid #111827; }
+body.light .my-btn.primary { background: #2563eb; color: white; }
+body.light .footer { color: #111827; }
+
+.github-btn{
+  display: block;
+  width: 200px;
+  margin-top:10px;
+  margin-bottom: 5px;
+  text-align:center;
+  padding:10px;
+  border-radius:12px;
+  background:#111827;
+  color:#fff;
+  text-decoration:none;
+  font-family: Arial, sans-serif;
+  font-size: 1.5rem;
+}
+
+.mode{
+  width: 220px;
+  margin: 10px 0;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.details{
+  margin-top: 10px;
+  color: #cbd5e1;
+  width: 220px;
+}
+
+.details summary{
+  cursor:pointer;
+  font-weight: 600;
 }
