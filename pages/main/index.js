@@ -1,64 +1,52 @@
-import {ProductCardComponent} from "../../components/product-card/index.js";
-import {ProductPage} from "../product/index.js";
+import { RequestCardComponent } from "../../components/request-card/index.js";
+import { RequestPage } from "../request/index.js";
+import { requests } from "../../data/requests.js";
 
 export class MainPage {
     constructor(parent) {
         this.parent = parent;
     }
 
-    get pageRoot() {
-        return document.getElementById('main-page')
+    get requestListRoot() {
+        return document.getElementById("request-list");
     }
 
     getHTML() {
-        return (
-            `
-                <div id="main-page" class="d-flex flex-wrap"><div/>
-            `
-        )
+        return `
+            <div id="main-page" class="app-container">
+                <div class="hero-block">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div>
+                            <h1 class="hero-title">Система заявок на вычисления</h1>
+                            <p class="hero-text">
+                                Просмотр заявок на факториал, НОД, степень и другие вычисления
+                            </p>
+                        </div>
+
+                        <div class="request-counter">
+                            ${requests.length} заявки
+                        </div>
+                    </div>
+                </div>
+
+                <div id="request-list" class="row row-cols-1 row-cols-md-2 g-4"></div>
+            </div>
+        `;
     }
 
-    getData() {
-        return [
-            {
-                id: 1,
-                src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
-                title: "Акция",
-                text: "Такой акции вы еще не видели 1"
-            },
-            {
-                id: 2,
-                src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
-                title: "Акция",
-                text: "Такой акции вы еще не видели 2"
-            },
-            {
-                id: 3,
-                src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
-                title: "Акция",
-                text: "Такой акции вы еще не видели 3"
-            },
-        ]
+    clickCard(event) {
+        const requestId = event.target.dataset.id;
+        const requestPage = new RequestPage(this.parent, requestId);
+        requestPage.render();
     }
 
-    clickCard(e) {
-        const cardId = e.target.dataset.id
-
-        const productPage = new ProductPage(this.parent, cardId)
-        productPage.render()
-    }
-        
     render() {
-        this.parent.innerHTML = ''
-        const html = this.getHTML()
-        this.parent.insertAdjacentHTML('beforeend', html)
-        
-        const data = this.getData()
-        data.forEach((item) => {
-            const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this))
-        })
+        this.parent.innerHTML = "";
+        this.parent.insertAdjacentHTML("beforeend", this.getHTML());
 
-        
+        requests.forEach((requestData) => {
+            const requestCard = new RequestCardComponent(this.requestListRoot);
+            requestCard.render(requestData, this.clickCard.bind(this));
+        });
     }
 }

@@ -3,7 +3,16 @@ export class ButtonComponent {
         this.parent = parent;
     }
 
-    render() {
-        this.parent.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Hello world 4!</button>');
+    getHTML(text, id) {
+        return `
+            <button class="btn btn-danger pm-btn w-100" id="${id}">
+                ${text}
+            </button>
+        `;
+    }
+
+    render(text, id, listener) {
+        this.parent.insertAdjacentHTML("beforeend", this.getHTML(text, id));
+        document.getElementById(id).addEventListener("click", listener);
     }
 }
