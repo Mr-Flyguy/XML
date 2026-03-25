@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "title": "Вычисление выражения",
+    "description": "Вычислить 2*x+5 при x=3",
+    "type": "solve",
+    "status": "done",
+    "expression": "2*x+5",
+    "x": 3
+  },
+  {
+    "id": 2,
+    "title": "Сумма квадратов",
+    "description": "Найти сумму квадратов массива [1,2,3,4]",
+    "type": "sum_of_squares",
+    "status": "in_progress",
+    "numbers": [1, 2, 3, 4]
+  },
+  {
+    "id": 3,
+    "title": "Сумма квадратов",
+    "description": "Найти сумму квадратов массива [5,1,2]",
+    "type": "sum_of_squares",
+    "status": "new",
+    "numbers": [5, 1, 2]
+  }
+]
