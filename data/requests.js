@@ -1,4 +1,4 @@
-export const requests = [
+export const initial_requests = [
     {
         id: 1,
         title: "Вычисление выражения",

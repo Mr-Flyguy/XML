@@ -36,12 +36,12 @@ export class RequestModelComponent {
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-        scene.add(ambientLight);
+        const ambient_light = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambient_light);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        directionalLight.position.set(3, 5, 3);
-        scene.add(directionalLight);
+        const directional_light = new THREE.DirectionalLight(0xffffff, 1.5);
+        directional_light.position.set(3, 5, 3);
+        scene.add(directional_light);
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
@@ -62,8 +62,8 @@ export class RequestModelComponent {
                 model.position.y -= box.min.y;
                 model.position.z -= center.z;
 
-                const maxSize = Math.max(size.x, size.y, size.z);
-                const scale = 2 / maxSize;
+                const max_size = Math.max(size.x, size.y, size.z);
+                const scale = 2 / max_size;
                 model.scale.setScalar(scale);
 
                 scene.add(model);

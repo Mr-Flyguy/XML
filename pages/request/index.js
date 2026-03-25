@@ -2,7 +2,7 @@ import { RequestComponent } from "../../components/request/index.js";
 import { RequestModelComponent } from "../../components/request-model/index.js";
 import { BackButtonComponent } from "../../components/back-button/index.js";
 import { MainPage } from "../main/index.js";
-import { requests } from "../../data/requests.js";
+import { get_request_by_id } from "../../utils/request-storage.js";
 import { solve, sumOfSquares } from "../../utils/calculations.js";
 
 export class RequestPage {
@@ -11,7 +11,7 @@ export class RequestPage {
         this.id = Number(id);
     }
 
-    get pageRoot() {
+    get page_root() {
         return document.getElementById("request-page");
     }
 
@@ -21,8 +21,8 @@ export class RequestPage {
         `;
     }
 
-    getData() {
-        const request = requests.find((item) => item.id === this.id);
+    get_data() {
+        const request = get_request_by_id(this.id);
 
         if (!request) {
             return null;
@@ -46,25 +46,24 @@ export class RequestPage {
         };
     }
 
-    clickBack() {
-        const mainPage = new MainPage(this.parent);
-        mainPage.render();
+    click_back() {
+        const main_page = new MainPage(this.parent);
+        main_page.render();
     }
 
     render() {
         this.parent.innerHTML = "";
         this.parent.insertAdjacentHTML("beforeend", this.getHTML());
 
-        const backButton = new BackButtonComponent(this.pageRoot);
-        backButton.render(this.clickBack.bind(this));
+        const back_button = new BackButtonComponent(this.page_root);
+        back_button.render(this.click_back.bind(this));
 
-        const requestData = this.getData();
+        const request_data = this.get_data();
+        const request_component = new RequestComponent(this.page_root);
+        request_component.render(request_data);
 
-        const requestComponent = new RequestComponent(this.pageRoot);
-        requestComponent.render(requestData);
-
-        const modelRoot = document.getElementById("request-model-root");
-        const requestModel = new RequestModelComponent(modelRoot);
-        requestModel.render();
+        const model_root = document.getElementById("request-model-root");
+        const request_model = new RequestModelComponent(model_root);
+        request_model.render();
     }
 }
