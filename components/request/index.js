@@ -3,39 +3,39 @@ export class RequestComponent {
         this.parent = parent;
     }
 
-    getInputHTML(requestData) {
-        if (requestData.type === "solve") {
-            return `Выражение: ${requestData.expression}, x = ${requestData.x}`;
+    get_input_html(request_data) {
+        if (request_data.type === "solve") {
+            return `Выражение: ${request_data.expression}, x = ${request_data.x}`;
         }
 
-        if (requestData.type === "sum_of_squares") {
-            return `Массив: [${requestData.numbers.join(", ")}]`;
+        if (request_data.type === "sum_of_squares") {
+            return `Массив: [${request_data.numbers.join(", ")}]`;
         }
 
         return "";
     }
 
-    getStepsHTML(requestData) {
-        if (requestData.result === null) {
+    get_steps_html(request_data) {
+        if (request_data.result === null) {
             return `Шаги решения будут доступны после выполнения заявки`;
         }
 
-        if (requestData.type === "solve") {
+        if (request_data.type === "solve") {
             return `
                 <ol class="mb-0">
-                    <li>Подставляем x = ${requestData.x}</li>
-                    <li>Получаем выражение: ${requestData.expression.replace(/x/g, requestData.x)}</li>
-                    <li>Вычисляем результат: ${requestData.result}</li>
+                    <li>Подставляем x = ${request_data.x}</li>
+                    <li>Получаем выражение: ${request_data.expression.replace(/x/g, request_data.x)}</li>
+                    <li>Вычисляем результат: ${request_data.result}</li>
                 </ol>
             `;
         }
 
-        if (requestData.type === "sum_of_squares") {
+        if (request_data.type === "sum_of_squares") {
             return `
                 <ol class="mb-0">
-                    <li>Берём массив: [${requestData.numbers.join(", ")}]</li>
+                    <li>Берём массив: [${request_data.numbers.join(", ")}]</li>
                     <li>Возводим каждый элемент в квадрат</li>
-                    <li>Складываем квадраты и получаем: ${requestData.result}</li>
+                    <li>Складываем квадраты и получаем: ${request_data.result}</li>
                 </ol>
             `;
         }
@@ -43,25 +43,32 @@ export class RequestComponent {
         return "";
     }
 
-    getHTML(requestData) {
+    getHTML(request_data) {
         return `
             <div class="request-page-card">
                 <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
                     <div>
-                        <h2 class="mb-2">${requestData.title}</h2>
-                        <p class="text-muted mb-0">${requestData.text}</p>
+                        <h2 class="mb-2">${request_data.title}</h2>
+                        <p class="text-muted mb-0">${request_data.text}</p>
                     </div>
-                    <span class="request-status">${requestData.status}</span>
+                    <span class="request-status">${request_data.status}</span>
+                </div>
+
+                <div class="request-media">
+                    <div class="request-image-block">
+                        <img class="request-image" src="${request_data.image}" alt="Изображение услуги">
+                    </div>
+                    <div id="request-model-root"></div>
                 </div>
 
                 ${
-                    requestData.result !== null
-                        ? `<div class="request-result">Результат: ${requestData.result}</div>`
+                    request_data.result !== null
+                        ? `<div class="request-result">Результат: ${request_data.result}</div>`
                         : `<div class="request-result">Результат: ожидается</div>`
                 }
 
                 <div class="request-info mb-3">
-                    ${this.getInputHTML(requestData)}
+                    ${this.get_input_html(request_data)}
                 </div>
 
                 <div class="accordion" id="request-accordion">
@@ -78,11 +85,11 @@ export class RequestComponent {
                         </h2>
                         <div id="request-info" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <p><b>Описание:</b> ${requestData.text}</p>
-                                <p><b>Данные:</b> ${this.getInputHTML(requestData)}</p>
-                                <p><b>Ответ:</b> ${requestData.result !== null ? requestData.result : "ещё не вычислен"}</p>
-                                <p><b>Статус:</b> ${requestData.status}</p>
-                                <p><b>Тип вычисления:</b> ${requestData.type}</p>
+                                <p><b>Описание:</b> ${request_data.text}</p>
+                                <p><b>Данные:</b> ${this.get_input_html(request_data)}</p>
+                                <p><b>Ответ:</b> ${request_data.result !== null ? request_data.result : "ещё не вычислен"}</p>
+                                <p><b>Статус:</b> ${request_data.status}</p>
+                                <p><b>Тип вычисления:</b> ${request_data.type}</p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +107,7 @@ export class RequestComponent {
                         </h2>
                         <div id="request-steps" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                ${this.getStepsHTML(requestData)}
+                                ${this.get_steps_html(request_data)}
                             </div>
                         </div>
                     </div>
@@ -109,8 +116,8 @@ export class RequestComponent {
         `;
     }
 
-    render(requestData) {
-        const html = this.getHTML(requestData);
+    render(request_data) {
+        const html = this.getHTML(request_data);
         this.parent.insertAdjacentHTML("beforeend", html);
     }
 }

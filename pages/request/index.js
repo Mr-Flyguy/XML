@@ -1,4 +1,5 @@
 import { RequestComponent } from "../../components/request/index.js";
+import { RequestModelComponent } from "../../components/request-model/index.js";
 import { BackButtonComponent } from "../../components/back-button/index.js";
 import { MainPage } from "../main/index.js";
 import { requests } from "../../data/requests.js";
@@ -58,7 +59,12 @@ export class RequestPage {
         backButton.render(this.clickBack.bind(this));
 
         const requestData = this.getData();
+
         const requestComponent = new RequestComponent(this.pageRoot);
         requestComponent.render(requestData);
+
+        const modelRoot = document.getElementById("request-model-root");
+        const requestModel = new RequestModelComponent(modelRoot);
+        requestModel.render();
     }
 }
