@@ -5,6 +5,18 @@ export class RequestCardComponent {
         this.parent = parent;
     }
 
+    getInfoHTML(requestData) {
+        if (requestData.type === "solve") {
+            return `Выражение: ${requestData.expression}, x = ${requestData.x}`;
+        }
+
+        if (requestData.type === "sum_of_squares") {
+            return `Массив: [${requestData.numbers.join(", ")}]`;
+        }
+
+        return "";
+    }
+
     getHTML(requestData) {
         return `
             <div class="col">
@@ -18,7 +30,7 @@ export class RequestCardComponent {
                         <p class="request-text">${requestData.text}</p>
 
                         <div class="request-info">
-                            Входные данные: ${requestData.input}
+                            ${this.getInfoHTML(requestData)}
                         </div>
 
                         <div id="request-card-button-${requestData.id}" class="mt-auto"></div>

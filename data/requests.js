@@ -1,34 +1,36 @@
 export const requests = [
     {
         id: 1,
-        title: "Факториал",
-        text: "Вычислить факториал числа 6",
-        input: "6",
-        result: "720",
+        title: "Вычисление выражения",
+        text: "Вычислить выражение 2*x+5",
+        type: "solve",
+        expression: "2*x+5",
+        x: 3,
         status: "Выполнено"
     },
     {
         id: 2,
-        title: "НОД",
-        text: "Найти НОД чисел 48 и 18",
-        input: "48, 18",
-        result: "6",
+        title: "Сумма квадратов",
+        text: "Найти сумму квадратов элементов массива",
+        type: "sum_of_squares",
+        numbers: [1, 2, 3, 4],
         status: "Выполнено"
     },
     {
         id: 3,
-        title: "Степень",
-        text: "Вычислить 2^10",
-        input: "2^10",
-        result: null,
+        title: "Вычисление выражения",
+        text: "Вычислить выражение (x+2)*(x-1)",
+        type: "solve",
+        expression: "(x+2)*(x-1)",
+        x: 4,
         status: "Новая"
     },
     {
         id: 4,
-        title: "Сумма цифр",
-        text: "Найти сумму цифр числа 5834",
-        input: "5834",
-        result: null,
+        title: "Сумма квадратов",
+        text: "Найти сумму квадратов элементов массива",
+        type: "sum_of_squares",
+        numbers: [5, 1, 2],
         status: "В обработке"
     }
 ];
