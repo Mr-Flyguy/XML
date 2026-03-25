@@ -1,195 +1,173 @@
-window.onload = function(){ 
-    // Переменные для хранения чисел и операций
-    let a = ''           // Первое число
-    let b = ''           // Второе число
-    let expressionResult = ''  // Результат вычисления
-    let selectedOperation = null  // Выбранная операция
-    // Получаем доступ к экрану калькулятора в поле вывода
-    const outputElement = document.getElementById("result")
+window.onload = function () {
+    let firstOperand = '';
+    let secondOperand = '';
+    let resultValue = '';
+    let currentOperation = null;
 
-    // Получаем все кнопки с цифрами (их id начинаются с "btn_digit_")
-    const digitButtons = document.querySelectorAll('[id ^= "btn_digit_"]')
-    function onDigitButtonClicked(digit) {
-        // Если операция не выбрана, работаем с первым числом (a) - после выбора операции начинается ввод второго числа
-        if (!selectedOperation) {
-            // Проверяем, не пытаемся ли мы добавить вторую точку
-            if ((digit != '.') || (digit == '.' && !a.includes(digit))) { 
-                a += digit;
+    const resultElement = document.getElementById('result');
+    const digitButtons = document.querySelectorAll('[id^="btn_digit_"]');
+
+    function updateDisplay(value) {
+        resultElement.innerHTML = value === '' ? '0' : value;
+    }
+
+    function appendDigit(digit) {
+        if (currentOperation === null) {
+            if (digit !== '.' || !firstOperand.includes('.')) {
+                firstOperand += digit;
             }
-            outputElement.innerHTML = a;
-        } 
-        // Если операция выбрана, работаем со вторым числом (b)
-        else {
-            if ((digit != '.') || (digit == '.' && !b.includes(digit))) { 
-                b += digit;
-                outputElement.innerHTML = b;        
+            updateDisplay(firstOperand);
+        } else {
+            if (digit !== '.' || !secondOperand.includes('.')) {
+                secondOperand += digit;
             }
+            updateDisplay(secondOperand);
         }
     }
-    // Настраиваем обработчики для цифровых кнопок
+
     digitButtons.forEach(button => {
-        button.onclick = function() {
-            const digitValue = button.innerHTML;
-            onDigitButtonClicked(digitValue);
-        }
+        button.onclick = function () {
+            appendDigit(button.innerHTML);
+        };
     });
 
-    // Настраиваем обработчики для кнопок операций
-    document.getElementById("btn_op_mult").onclick = function() { 
-        if (a === '') return;
-        selectedOperation = 'x';
-    }
-    document.getElementById("btn_op_plus").onclick = function () {
-    if (a === '') return;
-
-    if (selectedOperation === '+' && b !== '') {
-        a = ((+a) + (+b)).toString();
-        b = '';
-        outputElement.innerHTML = a;
+    function setOperation(operationSymbol) {
+        if (firstOperand === '') return;
+        currentOperation = operationSymbol;
     }
 
-    selectedOperation = '+';
-    }
-    document.getElementById("btn_op_minus").onclick = function () {
-    if (a === '') return;
+    document.getElementById('btn_op_plus').onclick = function () {
+        setOperation('+');
+    };
 
-    if (selectedOperation === '-' && b !== '') {
-        a = ((+a) - (+b)).toString();
-        b = '';
-        outputElement.innerHTML = a;
+    document.getElementById('btn_op_minus').onclick = function () {
+        setOperation('-');
+    };
+
+    document.getElementById('btn_op_mult').onclick = function () {
+        setOperation('x');
+    };
+
+    document.getElementById('btn_op_div').onclick = function () {
+        setOperation('/');
+    };
+
+    document.getElementById('btn_op_gcd').onclick = function () {
+        setOperation('gcd');
+    };
+
+    document.getElementById('btn_op_clear').onclick = function () {
+        firstOperand = '';
+        secondOperand = '';
+        resultValue = '';
+        currentOperation = null;
+        updateDisplay('0');
+    };
+
+    document.getElementById('theme_toggle').onclick = function () {
+        document.body.classList.toggle('dark');
+        document.body.classList.toggle('light');
+    };
+
+    if (
+        !document.body.classList.contains('light') &&
+        !document.body.classList.contains('dark')
+    ) {
+        document.body.classList.add('light');
     }
 
-    selectedOperation = '-';
-    }
-    document.getElementById("btn_op_div").onclick = function() { 
-        if (a === '') return;
-        selectedOperation = '/';
-    }
-    // Очищаем все значения при нажатии на кнопку C
-    document.getElementById("btn_op_clear").onclick = function() { 
-        a = ''
-        b = ''
-        selectedOperation = ''
-        expressionResult = ''
-        outputElement.innerHTML = 0
-    }
-    
-    document.getElementById('theme_toggle').addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    document.body.classList.toggle('light');
-    });
+    function calculateFactorial(number) {
+        const integerNumber = Math.trunc(number);
 
-    if (!document.body.classList.contains('light') && !document.body.classList.contains('dark')) {
-    document.body.classList.add('light');
-    }
-
-    // document.getElementById("btn_op_sign").onclick = function() {
-    //     if (!selectedOperation) {
-    //         if (a === '') return;
-    //         a = (-1 * (+a)).toString();
-    //         outputElement.innerHTML = a;
-    //     } else {
-    //         if (b === '') return;
-    //         b = (-1 * (+b)).toString();
-    //         outputElement.innerHTML = b;
-    //     }
-    // }
-
-    document.getElementById("btn_op_percent").onclick = function() {
-        if (!selectedOperation) {
-            if (a === '') return;
-            a = ((+a) / 100).toString();
-            outputElement.innerHTML = a;
-        } else {
-            if (b === '') return;
-            b = ((+b) / 100).toString();
-            outputElement.innerHTML = b;
+        if (integerNumber < 0) {
+            return 'Ошибка';
         }
-    }
 
-
-    // document.getElementById("btn_op_percent").onclick = function () {
-    //     if (!selectedOperation) {
-    //         if (a === '') return;
-    //         a = a.slice(0, -1);
-    //         outputElement.innerHTML = a === '' ? 0 : a;
-    //     } else {
-    //         if (b === '') return;
-    //         b = b.slice(0, -1);
-    //         outputElement.innerHTML = b === '' ? 0 : b;
-    //     }
-    // }
-
-    // document.getElementById("btn_op_percent").onclick = function () {
-    //     if (!selectedOperation) {
-    //         if (a === '') return;
-    //         a = Math.sqrt(+a).toString();
-    //         outputElement.innerHTML = a;
-    //     } else {
-    //         if (b === '') return;
-    //         b = Math.sqrt(+b).toString();
-    //         outputElement.innerHTML = b;
-    //     }
-    // }
-
-    function factorial(n) {
-        let res = 1;
-        for (let i = 2; i <= n; i++) res *= i;
-        return res;
-    }
-
-    document.getElementById("btn_op_factorial").onclick = function () {
-        if (!selectedOperation) {
-            if (a === '') return;
-            const n = Math.trunc(+a);
-            a = factorial(n).toString();
-            outputElement.innerHTML = a;
-        } else {
-            if (b === '') return;
-            const n = Math.trunc(+b);
-            b = factorial(n).toString();
-            outputElement.innerHTML = b;
+        let factorialResult = 1;
+        for (let i = 2; i <= integerNumber; i++) {
+            factorialResult *= i;
         }
+
+        return factorialResult;
     }
 
-    // document.getElementById("btn_op_percent").onclick = function () {
-    //     if (!selectedOperation) {
-    //         if (a === '') return;
-    //         a = ((+a) * (+a)).toString();
-    //         outputElement.innerHTML = a;
-    //     } else {
-    //         if (b === '') return;
-    //         b = ((+b) * (+b)).toString();
-    //         outputElement.innerHTML = b;
-    //     }
-    // }
+    document.getElementById('btn_op_factorial').onclick = function () {
+        if (currentOperation === null) {
+            if (firstOperand === '') return;
 
-    // Вычисляем результат при нажатии на =
-    document.getElementById("btn_op_equal").onclick = function() { 
-        if (a === '' || b === '' || !selectedOperation)
-            return
-            
-        switch(selectedOperation) { 
-            case 'x':
-                expressionResult = (+a) * (+b)
-                break;
+            const factorialResult = calculateFactorial(+firstOperand);
+            if (factorialResult === 'Ошибка') {
+                updateDisplay('Ошибка');
+                return;
+            }
+
+            firstOperand = factorialResult.toString();
+            updateDisplay(firstOperand);
+        } else {
+            if (secondOperand === '') return;
+
+            const factorialResult = calculateFactorial(+secondOperand);
+            if (factorialResult === 'Ошибка') {
+                updateDisplay('Ошибка');
+                return;
+            }
+
+            secondOperand = factorialResult.toString();
+            updateDisplay(secondOperand);
+        }
+    };
+
+    function calculateGreatestCommonDivisor(firstNumber, secondNumber) {
+        let firstInteger = Math.abs(Math.trunc(firstNumber));
+        let secondInteger = Math.abs(Math.trunc(secondNumber));
+
+        while (secondInteger !== 0) {
+            const temporaryValue = secondInteger;
+            secondInteger = firstInteger % secondInteger;
+            firstInteger = temporaryValue;
+        }
+
+        return firstInteger;
+    }
+
+    document.getElementById('btn_op_equal').onclick = function () {
+        if (firstOperand === '' || secondOperand === '' || currentOperation === null) {
+            return;
+        }
+
+        const firstNumber = +firstOperand;
+        const secondNumber = +secondOperand;
+
+        switch (currentOperation) {
             case '+':
-                expressionResult = (+a) + (+b)
+                resultValue = firstNumber + secondNumber;
                 break;
             case '-':
-                expressionResult = (+a) - (+b)
+                resultValue = firstNumber - secondNumber;
+                break;
+            case 'x':
+                resultValue = firstNumber * secondNumber;
                 break;
             case '/':
-                expressionResult = (+a) / (+b)
+                if (secondNumber === 0) {
+                    updateDisplay('Ошибка');
+                    firstOperand = '';
+                    secondOperand = '';
+                    currentOperation = null;
+                    return;
+                }
+                resultValue = firstNumber / secondNumber;
+                break;
+            case 'gcd':
+                resultValue = calculateGreatestCommonDivisor(firstNumber, secondNumber);
                 break;
             default:
-                break;
+                return;
         }
-        
-        a = expressionResult.toString()
-        b = ''
-        selectedOperation = null
 
-        outputElement.innerHTML = a
-    }
+        firstOperand = resultValue.toString();
+        secondOperand = '';
+        currentOperation = null;
+        updateDisplay(firstOperand);
+    };
 };
